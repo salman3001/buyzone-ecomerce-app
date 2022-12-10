@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import { useStore } from '../context/store'
+import useStore from '../context/useStateStore'
 
 export default function Home() {
-  const { state, dispatch } = useStore()
+  const {cartState,cartDispatch} = useStore()
   return (
     <div>
       <Head>
@@ -12,14 +12,13 @@ export default function Home() {
       </Head>
 
       <div>
-        {state.cart.cartItems.length}
+        {cartState.cartCount}
         
       </div>
       <div>
-        {state.cart.cartItems}
       </div>
-      <button onClick={()=>dispatch({type:"ADD ITEM"})}>change to rinku</button>
-
+ <button onClick={()=>cartDispatch({type:"add"})}>increese</button>
+ <button onClick={()=>cartDispatch({type:"remove"})}>decrese</button>
     </div>
   )
 }
