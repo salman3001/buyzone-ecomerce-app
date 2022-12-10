@@ -1,57 +1,82 @@
 import { type } from "os";
-import { useReducer, useContext,createContext, ReactNode, Dispatch } from "react";
+import { useReducer, useContext, createContext, ReactNode, Dispatch } from "react";
 
-interface IinitialState{
-    name:string
+
+//Defining initial state
+
+interface InitialState {
+    cart: {
+        cartItems: string[],
+    }
 }
-const initialState:IinitialState={name:"sallu"}
+const initialState: InitialState = {
+    cart: {
+        cartItems: ["ss"],
+
+    }
+}
 
 
+//Defining actions 
+interface Action {
+    type: "ADD ITEM"
+    payload?: any
 
-interface Iaction{
-    type:""
-    payload:any
 
 }
-const action:Iaction={
-    type:"",
-    payload:432
+const action: Action = {
+    type: "ADD ITEM",
+    payload : null
+
 }
+
+// defining useReducer funtion
 
 function reducer(
-    state:IinitialState,
-    action:Iaction):IinitialState{
+    state: InitialState,
+    action: Action): InitialState {
     switch (action.type) {
-        case "":
-            return state
+        case "ADD ITEM":
+            let newCartItems=[...state.cart.cartItems]
+            newCartItems.push("salman")
+            
+ 
+            return {...state,cart:{cartItems:[...newCartItems]}}
             break;
-    
+
         default:
             return state
             break;
     }
-    }
+}
+
+//initalizing context
+
+const store = createContext<{ state: InitialState, dispatch: Dispatch<Action> }>({ state: initialState, dispatch: (action: Action) => null })
+
+//creating store provider
+
+export const StoreProvide = ({ children }: { children: ReactNode }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
 
 
-const store = createContext<{state:IinitialState,dispatch:Dispatch<Iaction>}>({state:initialState,dispatch:(action)=>void})
-
-const StoreProvide =({children}:{children:ReactNode})=>{
-    const [state,dispatch]=useReducer(reducer,initialState)
-    let value = {state:state,dispatch:dispatch}
-
-    return(
-        <store.Provider value={value}>
-          {children}
+    return (
+        <store.Provider value={{ state, dispatch }}>
+            {children}
         </store.Provider>
     )
 }
 
-function useStore(){
-    const [state,dispatch]=useContext(store)
-    return[
-        state,dispatch
-    ]
+//Creating useStoreHook
+
+export function useStore() {
+    const { dispatch, state } = useContext(store)
+    return { state, dispatch }
 }
 
-const [st,ds]=useStore()
+
+
+
+
+
 
