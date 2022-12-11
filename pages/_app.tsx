@@ -1,10 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import {StateStoreProvide} from '../context/useStateStore'
+import {CartStateProvider} from '../context/cart'
+import {UserStateProvider } from "../context/user"
 
 export default function App({ Component, pageProps }: AppProps) {
   return(
-  <StateStoreProvide>
+  <CartStateProvider>
+    <UserStateProvider>
     <Component {...pageProps} />
-  </StateStoreProvide>)
+    </UserStateProvider>
+  </CartStateProvider>)
 }

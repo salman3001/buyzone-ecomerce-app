@@ -1,8 +1,12 @@
 import Head from 'next/head'
-import useStore from '../context/useStateStore'
+import { useCartStore } from '../context/cart'
+import { useUserState } from '../context/user'
 
 export default function Home() {
-  const {cartState,cartDispatch} = useStore()
+
+  const [cartState, cartDispatch] = useCartStore()
+  const [userState, userDispatch] = useUserState()
+
   return (
     <div>
       <Head>
@@ -12,13 +16,25 @@ export default function Home() {
       </Head>
 
       <div>
-        {cartState.cartCount}
-        
+        {cartState.count}
+
       </div>
       <div>
       </div>
- <button onClick={()=>cartDispatch({type:"add"})}>increese</button>
- <button onClick={()=>cartDispatch({type:"remove"})}>decrese</button>
+      <button onClick={() => cartDispatch({ type: "add" })} >add</button>
+      <br />
+      <button onClick={() => cartDispatch({ type: "remove" })} >remove</button>
+       <br />
+       <br />
+       <br />
+       <div>
+            {userState.name} <br />
+            {userState.age}
+       </div>
+       <button onClick={()=>userDispatch({type:"changeName",payload:"rinku"})}>changname</button>
+       <br />
+       <button onClick={()=>userDispatch({type:"getOlder"})}>getolder</button>
+    
     </div>
   )
 }
