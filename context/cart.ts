@@ -1,8 +1,12 @@
-import createState from "./createStateStore"
+import createState from "@salman3001/react-state-manager/lib/createState"
 
 interface Action {
     type: "add" | "remove"
 }
+
+
+
+
 
 export const [CartStateProvider, useCartStore] = createState(
     { count: 0 },

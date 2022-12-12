@@ -1,4 +1,4 @@
-import createState from "./createStateStore";
+import createState from "@salman3001/react-state-manager/lib/createState"
 
 interface Action{
     type:"changeName"|"getOlder",
