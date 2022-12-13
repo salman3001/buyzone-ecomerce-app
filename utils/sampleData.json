@@ -1,8 +1,8 @@
 {
-    "_id":23,
-    "itemName":"T-shirt",
-    "discription":"sdsldk slkd slsdk sdj pof sdkf kdfj sdskfs l d",
-    "price":200,
-    "inStock":5,
-    "photos":["",""]
+  "_id": 23,
+  "itemName": "T-shirt",
+  "discription": "sdsldk slkd slsdk sdj pof sdkf kdfj sdskfs l d",
+  "price": 200,
+  "inStock": 5,
+  "photos": ["", ""]
 }
