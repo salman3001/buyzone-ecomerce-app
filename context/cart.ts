@@ -1,10 +1,9 @@
 import createState from '@salman3001/react-state-manager/lib/createState';
 
 interface Action {
-	type: 'add' | 'remove'|"sas";
+	type: 'add' | 'remove' 
+	| 'sas';
 }
-
-
 
 export const [CartStateProvider, useCartStore] = createState({ count: 0 }, (state, action: Action) => {
 	switch (action.type) {
