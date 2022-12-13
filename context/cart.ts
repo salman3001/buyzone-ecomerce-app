@@ -1,7 +1,13 @@
 import createState from "@salman3001/react-state-manager/lib/createState"
 
 interface Action {
+
+
     type: "add" | "remove"
+
+
+
+
 }
 
 
@@ -13,10 +19,10 @@ export const [CartStateProvider, useCartStore] = createState(
     (state, action: Action) => {
         switch (action.type) {
             case "add":
-                return { ...state, count: state.count+1 }
+                return { ...state, count: state.count + 1 }
                 break;
             case "remove":
-                return { ...state, count: state.count-1 }
+                return { ...state, count: state.count - 1 }
                 break;
 
             default:

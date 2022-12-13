@@ -1,40 +1,30 @@
-import Head from 'next/head'
-import { useCartStore } from '../context/cart'
-import { useUserState } from '../context/user'
+
+import ProductCard from '../components/ProductCard'
+import Layout from '../components/Layout'
+import data from "../utils/sampleData.json"
+
 
 export default function Home() {
 
-  const [cartState, cartDispatch] = useCartStore()
-  const [userState, userDispatch] = useUserState()
-
   return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="BuyZone- E-commerce App" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout title='Home' >
+      <div className="container mx-auto py-2  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4 ">
 
-      <div>
-        {cartState.count}
-
+        <ProductCard
+          _id={data._id}
+          itemName={data.itemName}
+          price={data.price}
+          photos={data.photos}
+          inStock={data.inStock}
+        />
+        <ProductCard
+          _id={data._id}
+          itemName={data.itemName}
+          price={data.price}
+          photos={data.photos}
+          inStock={data.inStock}
+        />
       </div>
-      <div>
-      </div>
-      <button onClick={() => cartDispatch({ type: "add" })} >add</button>
-      <br />
-      <button onClick={() => cartDispatch({ type: "remove" })} >remove</button>
-       <br />
-       <br />
-       <br />
-       <div>
-            {userState.name} <br />
-            {userState.age}
-       </div>
-       <button onClick={()=>userDispatch({type:"changeName",payload:"rinku"})}>changname</button>
-       <br />
-       <button onClick={()=>userDispatch({type:"getOlder"})}>getolder</button>
-    
-    </div>
+    </Layout>
   )
 }
