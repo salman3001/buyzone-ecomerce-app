@@ -1,4 +1,13 @@
 {
-  "extends": ["airbnb", "next/core-web-vitals", "prettier"],
-  "rules": {}
+	"extends": ["airbnb", "next/core-web-vitals", "prettier"],
+	"rules": {
+		"rules": {
+			"react/jsx-filename-extension": [
+				1,
+				{
+					"extensions": [".tsx"]
+				}
+			]
+		}
+	}
 }
