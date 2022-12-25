@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { useCartState } from "../context/cart"
 
 interface IHead {
 	title: string;
@@ -8,6 +9,9 @@ interface IHead {
 }
 
 export default function Layout(prop: IHead) {
+	const [cartState] = useCartState()
+
+
 	return (
 		<>
 			<Head>
@@ -23,7 +27,7 @@ export default function Layout(prop: IHead) {
 					<div className="pr-2">
 						<NavMenu href="/cart">
 							cart
-							<div className="badge-error badge mx-1">2</div>
+							<div className="badge-error badge mx-1">{cartState.items.length}</div>
 						</NavMenu>
 						<NavMenu href="/login">Log in</NavMenu>
 						<div className="flex aspect-square items-center justify-center rounded-full border-2 text-primary-content ">

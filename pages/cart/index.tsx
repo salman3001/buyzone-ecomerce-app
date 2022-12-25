@@ -26,13 +26,18 @@ export default function Cart() {
 	);
 }
 
-const Item = () => (
+interface ItemProp {
+	name: string
+	price: string
+}
+
+const Item = (prop: ItemProp) => (
 	<div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-between">
 		<div className="flex gap-2">
 			<div className="inline-block h-16 w-16 rounded border-2"></div>
 			<div>
-				<h2>item name</h2>
-				<h2>100 $</h2>
+				<h2>{prop.name}</h2>
+				<h2>{prop.price} $</h2>
 			</div>
 		</div>
 		<div className="flex items-center">

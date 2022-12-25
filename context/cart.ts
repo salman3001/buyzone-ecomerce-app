@@ -2,14 +2,22 @@ import createState from '@salman3001/react-state-manager/lib/createState';
 
 interface Action {
 	type: 'add' | 'remove';
+	payload:number
 }
 
-export const [CartStateProvider, useCartState] = createState({ count: 0 }, (state, action: Action) => {
+export const [CartStateProvider, useCartState] = createState<{items:number[]},Action>({ items: [] }, (state, action: Action) => {
 	switch (action.type) {
 		case 'add':
-			return { ...state, count: state.count + 1 };
+			let newState={...state,items:[...state.items,action.payload]}
+			return newState;
 		case 'remove':
-			return { ...state, count: state.count - 1 };
+			let newValues:number[]=[]
+			for (const value of state.items) {
+				if (value!==action.payload) {
+				newValues.push(value)
+				}
+			}
+	     return { items:newValues }
 		default:
 			break;
 	}
