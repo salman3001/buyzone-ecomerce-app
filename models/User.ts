@@ -1,6 +1,14 @@
-import mongoose, { Schema, SchemaDefinition } from 'mongoose';
+import mongoose, { Schema, SchemaDefinition, Document } from 'mongoose';
 
-const userSchema = new Schema<SchemaDefinition>(
+export interface UserSchema extends Document {
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	isAdmin: boolean;
+}
+
+const userSchema = new Schema<UserSchema>(
 	{
 		firstName: {
 			type: String,
@@ -41,4 +49,6 @@ const userSchema = new Schema<SchemaDefinition>(
 	{ timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model<UserSchema>('User', userSchema);
+
+export default User;
