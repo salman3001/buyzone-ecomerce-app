@@ -1,7 +1,8 @@
+import { useSession, signOut } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { useCartState } from "../context/cart"
+import { useCartState } from '../context/cart';
 
 interface IHead {
 	title: string;
@@ -9,9 +10,8 @@ interface IHead {
 }
 
 export default function Layout(prop: IHead) {
-	const [cartState] = useCartState()
-
-
+	const [cartState] = useCartState();
+	const { data: session } = useSession();
 	return (
 		<>
 			<Head>
@@ -29,10 +29,14 @@ export default function Layout(prop: IHead) {
 							cart
 							<div className="badge-error badge mx-1">{cartState.items.length}</div>
 						</NavMenu>
-						<NavMenu href="/login">Log in</NavMenu>
-						<div className="flex aspect-square items-center justify-center rounded-full border-2 text-primary-content ">
-							User
-						</div>
+						{session ? (
+							<>
+								<LogOutButton>Log Out</LogOutButton>
+								<div className="flex  items-center justify-center  text-primary-content ">{session?.user.name}</div>
+							</>
+						) : (
+							<LoginButton href="/login">Log In</LoginButton>
+						)}
 					</div>
 				</nav>
 				<main className="grow">{prop.children}</main>
@@ -55,6 +59,16 @@ const NavMenu = (prop: INavMenu) => (
 	</Link>
 );
 
+const LoginButton = (prop: INavMenu) => (
+	<Link href={prop.href} className="btn-ghost btn-xs btn text-primary-content ">
+		{prop.children}
+	</Link>
+);
+const LogOutButton = (prop: { children: ReactNode }) => (
+	<button className="btn-ghost btn-xs btn text-primary-content " onClick={() => signOut({ redirect: false })}>
+		{prop.children}
+	</button>
+);
 interface IBrand {
 	children: ReactNode;
 }

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import createAccountFormSchema from '../formValidationSchemas/createAccountFormSchema';
 import Link from 'next/link';
+import axios from 'axios';
+import Alert from '../components/Alert';
+import { useRouter } from 'next/router';
 
 const CreateAccount = () => {
+	const [error, setEror] = useState<null | string>(null);
+	const router = useRouter();
+	const { query } = router;
 	return (
 		<Layout title="Create Account">
 			<Formik
@@ -15,12 +21,23 @@ const CreateAccount = () => {
 					password: '',
 				}}
 				validationSchema={createAccountFormSchema}
-				onSubmit={(values) => {
-					alert('hello ' + values.firstName + ' , Your account has been created');
+				onSubmit={async (values, { resetForm }) => {
+					setEror(null);
+					try {
+						const res = await axios.post('/api/signup', values);
+						alert(`hello ${res.data.firstName}! Your Account has been created! Redirecting`);
+						setEror(null);
+						resetForm();
+						await setTimeout(() => {
+							router.push((query.redirect as string) || '/');
+						}, 500);
+					} catch (error: any) {
+						setEror(error.response.data.message);
+					}
 				}}
 			>
-				{({ errors, touched }) => (
-					<Form className="form-control m-4 mx-auto max-w-md gap-2 px-4">
+				{({ errors, touched, isSubmitting, handleSubmit }) => (
+					<Form className="ma x-w-md form-control m-4	mx-auto gap-2 px-4" onSubmit={handleSubmit}>
 						<h1 className="pb-2 text-2xl">Please enter your detail !</h1>
 						<label htmlFor="firstName" className="label py-0">
 							First Name
@@ -54,7 +71,10 @@ const CreateAccount = () => {
 							className={`input  ${errors.password && touched.password ? 'input-error' : 'input-primary'}`}
 						/>
 						<ErrorMessage component="div" name="password" className="text-error" />
-						<button className="btn-primary btn my-4">Create Account</button>
+						{error ? <Alert type="alert-error">{error}</Alert> : null}
+						<button type="submit" className={`${isSubmitting ? `btn-disabled` : `btn-primary`} btn my-4`}>
+							Create Account
+						</button>
 						<p className="self-center text-center ">
 							Alread have an account ? <br />
 							<Link href="/login" className="link-primary link ">
