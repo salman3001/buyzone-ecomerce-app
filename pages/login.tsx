@@ -34,8 +34,14 @@ const FormComponent = () => {
 				signIn('credentials', values);
 			}}
 		>
-			{({ errors, touched }) => (
-				<Form className="form-control mx-auto my-[10%] h-full max-w-md gap-2 px-4">
+			{({ errors, touched, handleSubmit }) => (
+				<Form
+					className="form-control mx-auto my-[10%] h-full max-w-md gap-2 px-4"
+					onSubmit={(e) => {
+						e.preventDefault();
+						handleSubmit();
+					}}
+				>
 					{query.error ? <Alert type="alert-error">{`invalid credentials`}</Alert> : null}
 					<h1 className="pb-2 text-2xl">Please enter your detail !</h1>
 					<label htmlFor="email">Email</label>
@@ -62,7 +68,3 @@ const FormComponent = () => {
 		</Formik>
 	);
 };
-
-// const errorText=()=>(
-//     <div className=''></div>
-// )

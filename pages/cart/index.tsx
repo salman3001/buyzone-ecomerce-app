@@ -1,5 +1,8 @@
 import Layout from '../../components/Layout';
+import { useCartState } from '../../context/cart';
+
 export default function Cart() {
+	const [cartState, cartAction] = useCartState();
 	return (
 		<Layout title="Cart">
 			<div className=" container mx-auto grid gap-4 p-4 sm:grid-cols-3">
@@ -27,8 +30,8 @@ export default function Cart() {
 }
 
 interface ItemProp {
-	name: string
-	price: string
+	name: string;
+	price: string;
 }
 
 const Item = (prop: ItemProp) => (

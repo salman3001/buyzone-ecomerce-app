@@ -5,7 +5,7 @@ import { hash } from 'bcryptjs';
 
 export default async function Handler(req: NextApiRequest, res: NextApiResponse) {
 	try {
-		// await dbConnect();
+		await dbConnect();
 		const body = req.body;
 		if (req.method === 'POST') {
 			if (!req.body) {
